@@ -1,12 +1,14 @@
-console.log("App.js is running")
+"use strict";
+
+console.log("App.js is running");
 
 // JSX Javascript syntax extension
 
-// var template = <p>This is JSX from App.js</p>;
-var template = React.createElement("h1", {
-    id: "someID"
-  }, "This is JSX from App.js");
+var template = React.createElement(
+  "p",
+  null,
+  "Does this hey App.js"
+);
+var appRoot = document.getElementById("app");
 
-var appRoot = document.getElementById("app")
-
-ReactDOM.render(template, appRoot)
+ReactDOM.render(template, appRoot);
