@@ -4,12 +4,14 @@ console.log("App.js is running")
 
 var app = {
     title: "Indecision App",
-    subtitle: "This is some info"
+    subtitle: "This is some info",
+    options: ["Option 1", "Option 2"]
 }
 var template = (
     <div>
         <h1>{app.title}</h1>
-        <p>{app.subtitle}</p>
+        {app.subtitle && <p>{app.subtitle}</p>}
+        <p>{app.options.length > 0 ? "Here are your options" : "No Options"}</p>
         <ol>
             <li>Item One</li>
             <li>Item two</li>
@@ -27,11 +29,19 @@ var userName = "Ayeee"
 var userAge = "29"
 var userLocation = "Jersey City"
 
+function getLocation(location){
+    if(location){
+        return <p>Location: {location}</p>
+    }
+}
+
 var template2 = (
     <div>
-        <h1>{user.name.toUpperCase()}</h1>
-        <p>Age: {user.age}</p>
-        <p>Location: {user.location}</p>
+        <h1>{user.name ? user.name.toUpperCase() : "Anono"}</h1>
+        {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
+        {
+            getLocation(user.location)
+        }
     </div>
 )
 var appRoot = document.getElementById("app")
