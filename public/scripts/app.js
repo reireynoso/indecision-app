@@ -1,24 +1,86 @@
 "use strict";
 
-var nameVar = "Andrew";
-var nameVar = "Mike";
+console.log("App.js is running");
 
-console.log('nameVar', nameVar);
+// JSX Javascript syntax extension
 
-var nameLet = "Jen";
-nameLet = "Yo";
-console.log("nameLet", nameLet);
+var app = {
+    title: "Indecision App",
+    subtitle: "This is some info",
+    options: ["Option 1", "Option 2"]
+};
 
-var nameConst = "Frank";
-console.log('nameConst', nameConst);
+var template = React.createElement(
+    "div",
+    null,
+    React.createElement(
+        "h1",
+        null,
+        app.title
+    ),
+    app.subtitle && React.createElement(
+        "p",
+        null,
+        app.subtitle
+    ),
+    React.createElement(
+        "p",
+        null,
+        app.options.length > 0 ? "Here are your options" : "No Options"
+    ),
+    React.createElement(
+        "ol",
+        null,
+        React.createElement(
+            "li",
+            null,
+            "Item One"
+        ),
+        React.createElement(
+            "li",
+            null,
+            "Item two"
+        )
+    )
+);
 
-// Block scoping 
+var user = {
+    name: "Rei",
+    age: 400,
+    location: "Jersey City"
+};
 
-var fullName = "Rei R";
+var userName = "Ayeee";
+var userAge = "29";
+var userLocation = "Jersey City";
 
-if (fullName) {
-    var _firstName = fullName.split(' ')[0];
-    console.log(_firstName); // Rei
+function getLocation(location) {
+    if (location) {
+        return React.createElement(
+            "p",
+            null,
+            "Location: ",
+            location
+        );
+    }
 }
 
-console.log(firstName);
+var template2 = React.createElement(
+    "div",
+    null,
+    React.createElement(
+        "h1",
+        null,
+        user.name ? user.name.toUpperCase() : "Anono"
+    ),
+    user.age && user.age >= 18 && React.createElement(
+        "p",
+        null,
+        "Age: ",
+        user.age
+    ),
+    getLocation(user.location)
+);
+var appRoot = document.getElementById("app");
+
+ReactDOM.render(template, appRoot);

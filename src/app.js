@@ -2,12 +2,13 @@ console.log("App.js is running")
 
 // JSX Javascript syntax extension
 
-var app = {
+const app = {
     title: "Indecision App",
     subtitle: "This is some info",
     options: ["Option 1", "Option 2"]
 }
-var template = (
+
+let template = (
     <div>
         <h1>{app.title}</h1>
         {app.subtitle && <p>{app.subtitle}</p>}
@@ -19,15 +20,15 @@ var template = (
     </div>
 );
 
-var user = {
+const user = {
     name: "Rei",
     age: 400,
     location: "Jersey City"
 }
 
-var userName = "Ayeee"
-var userAge = "29"
-var userLocation = "Jersey City"
+let userName = "Ayeee"
+let userAge = "29"
+let userLocation = "Jersey City"
 
 function getLocation(location){
     if(location){
@@ -35,7 +36,7 @@ function getLocation(location){
     }
 }
 
-var template2 = (
+const template2 = (
     <div>
         <h1>{user.name ? user.name.toUpperCase() : "Anono"}</h1>
         {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
@@ -44,6 +45,6 @@ var template2 = (
         }
     </div>
 )
-var appRoot = document.getElementById("app")
+const appRoot = document.getElementById("app")
 
 ReactDOM.render(template, appRoot)
