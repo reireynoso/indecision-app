@@ -4,18 +4,22 @@ console.log("App.js is running");
 
 // JSX Javascript syntax extension
 
+var app = {
+    title: "Indecision App",
+    subtitle: "This is some info"
+};
 var template = React.createElement(
     "div",
     null,
     React.createElement(
         "h1",
         null,
-        "Does this hey App.js"
+        app.title
     ),
     React.createElement(
         "p",
         null,
-        "This is Some info"
+        app.subtitle
     ),
     React.createElement(
         "ol",
@@ -33,25 +37,37 @@ var template = React.createElement(
     )
 );
 
+var user = {
+    name: "Rei",
+    age: 400,
+    location: "Jersey City"
+};
+
+var userName = "Ayeee";
+var userAge = "29";
+var userLocation = "Jersey City";
+
 var template2 = React.createElement(
     "div",
     null,
     React.createElement(
         "h1",
         null,
-        "Rei Rey"
+        user.name.toUpperCase()
     ),
     React.createElement(
         "p",
         null,
-        "Age: 29"
+        "Age: ",
+        user.age
     ),
     React.createElement(
         "p",
         null,
-        "Location: Jersey City"
+        "Location: ",
+        user.location
     )
 );
 var appRoot = document.getElementById("app");
 
-ReactDOM.render(template2, appRoot);
+ReactDOM.render(template, appRoot);
