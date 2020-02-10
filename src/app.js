@@ -20,31 +20,28 @@ let template = (
     </div>
 );
 
-const user = {
-    name: "Rei",
-    age: 400,
-    location: "Jersey City"
+let count = 0
+const addOne = () => {
+    count++
+    console.log(count)
 }
-
-let userName = "Ayeee"
-let userAge = "29"
-let userLocation = "Jersey City"
-
-function getLocation(location){
-    if(location){
-        return <p>Location: {location}</p>
-    }
+const minusOne = () => {
+    count--
+    console.log(count)
 }
-
-const template2 = (
+const reset = () => {
+    count = 0
+    console.log(count)
+}
+const templateTwo = (
     <div>
-        <h1>{user.name ? user.name.toUpperCase() : "Anono"}</h1>
-        {(user.age && user.age >= 18) && <p>Age: {user.age}</p>}
-        {
-            getLocation(user.location)
-        }
+        <h1>Count: {count}</h1>
+        <button onClick={addOne}> +1</button>
+        <button onClick={minusOne}> -1</button>
+        <button onClick={reset}>Reset</button>
     </div>
 )
+
 const appRoot = document.getElementById("app")
 
-ReactDOM.render(template, appRoot)
+ReactDOM.render(templateTwo, appRoot)

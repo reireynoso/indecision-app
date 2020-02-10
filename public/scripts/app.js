@@ -1,62 +1,88 @@
 "use strict";
 
-//arguments object - no longer bound with arrow functions
+console.log("App.js is running");
 
+// JSX Javascript syntax extension
 
-var add = function add(a, b) {
-    // console.log(arguments)
-    return a + b;
-};
-console.log(add(55, 1));
-
-// const addArrow = (a,b) => {
-//     console.log(arguments)
-//     return a + b
-// }
-// console.log(addArrow(55,1))
-
-
-//this keyword - no longer bound with arrow functions
-
-var user = {
-    name: "Rei",
-    cities: ["Jersey", "NY"],
-    // printPlacesLived: function(){
-    //     // console.log(this.name)
-    //     // console.log(this.cities)
-    //     this.cities.forEach(function(city){
-    //         console.log(city)
-    //     })
-    // }
-    printPlacesLived: function printPlacesLived() {
-        var _this = this;
-
-        //method definition es6
-        // console.log(this.name)
-        // console.log(this.cities)
-        return this.cities.map(function (city) {
-            return _this.name + " has lived in " + city;
-        });
-        // this.cities.forEach((city) => {
-        //     console.log(this.name, city)
-        // })
-    }
+var app = {
+    title: "Indecision App",
+    subtitle: "This is some info",
+    options: ["Option 1", "Option 2"]
 };
 
-console.log(user.printPlacesLived());
+var template = React.createElement(
+    "div",
+    null,
+    React.createElement(
+        "h1",
+        null,
+        app.title
+    ),
+    app.subtitle && React.createElement(
+        "p",
+        null,
+        app.subtitle
+    ),
+    React.createElement(
+        "p",
+        null,
+        app.options.length > 0 ? "Here are your options" : "No Options"
+    ),
+    React.createElement(
+        "ol",
+        null,
+        React.createElement(
+            "li",
+            null,
+            "Item One"
+        ),
+        React.createElement(
+            "li",
+            null,
+            "Item two"
+        )
+    )
+);
 
-// When we use a regular function defined on an object property, the this keyword is bound to the object
-
-var multiplier = {
-    numbers: [1, 2, 3, 4, 5, 6],
-    multiplyBy: 2,
-    multiply: function multiply() {
-        var _this2 = this;
-
-        return this.numbers.map(function (num) {
-            return num * _this2.multiplyBy;
-        });
-    }
+var count = 0;
+var addOne = function addOne() {
+    count++;
+    console.log(count);
 };
+var minusOne = function minusOne() {
+    count--;
+    console.log(count);
+};
+var reset = function reset() {
+    count = 0;
+    console.log(count);
+};
+var templateTwo = React.createElement(
+    "div",
+    null,
+    React.createElement(
+        "h1",
+        null,
+        "Count: ",
+        count
+    ),
+    React.createElement(
+        "button",
+        { onClick: addOne },
+        " +1"
+    ),
+    React.createElement(
+        "button",
+        { onClick: minusOne },
+        " -1"
+    ),
+    React.createElement(
+        "button",
+        { onClick: reset },
+        "Reset"
+    )
+);
 
-console.log(multiplier.multiply());
+var appRoot = document.getElementById("app");
+
+ReactDOM.render(templateTwo, appRoot);
