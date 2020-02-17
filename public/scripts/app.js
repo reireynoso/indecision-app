@@ -28,6 +28,7 @@ var removeList = function removeList() {
 };
 
 var appRoot = document.getElementById("app");
+// const numbers = [55,101,1000]
 
 var render = function render() {
     var template = React.createElement(
@@ -61,16 +62,15 @@ var render = function render() {
         React.createElement(
             "ol",
             null,
-            React.createElement(
-                "li",
-                null,
-                "Item One"
-            ),
-            React.createElement(
-                "li",
-                null,
-                "Item two"
-            )
+
+            // numbers.map(number => <p>{number}</p>)
+            app.options.map(function (option) {
+                return React.createElement(
+                    "li",
+                    { key: option },
+                    option
+                );
+            })
         ),
         React.createElement(
             "form",

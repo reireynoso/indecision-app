@@ -26,6 +26,7 @@ const removeList = () => {
 }
 
 const appRoot = document.getElementById("app")
+// const numbers = [55,101,1000]
 
 const render = () => {
     let template = (
@@ -36,8 +37,10 @@ const render = () => {
             <p>{app.options.length}</p>
             <button onClick={removeList}>Remove All</button>
             <ol>
-                <li>Item One</li>
-                <li>Item two</li>
+            {
+                // numbers.map(number => <p>{number}</p>)
+                app.options.map(option => <li key={option}>{option}</li>)
+            }
             </ol>
     
             <form onSubmit={onFormSubmit}>
