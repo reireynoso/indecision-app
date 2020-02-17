@@ -47,42 +47,50 @@ var template = React.createElement(
 var count = 0;
 var addOne = function addOne() {
     count++;
+    renderCounterApp();
     console.log(count);
 };
 var minusOne = function minusOne() {
     count--;
+    renderCounterApp();
     console.log(count);
 };
 var reset = function reset() {
     count = 0;
+    renderCounterApp();
     console.log(count);
 };
-var templateTwo = React.createElement(
-    "div",
-    null,
-    React.createElement(
-        "h1",
-        null,
-        "Count: ",
-        count
-    ),
-    React.createElement(
-        "button",
-        { onClick: addOne },
-        " +1"
-    ),
-    React.createElement(
-        "button",
-        { onClick: minusOne },
-        " -1"
-    ),
-    React.createElement(
-        "button",
-        { onClick: reset },
-        "Reset"
-    )
-);
 
 var appRoot = document.getElementById("app");
 
-ReactDOM.render(templateTwo, appRoot);
+var renderCounterApp = function renderCounterApp() {
+    var templateTwo = React.createElement(
+        "div",
+        null,
+        React.createElement(
+            "h1",
+            null,
+            "Count: ",
+            count
+        ),
+        React.createElement(
+            "button",
+            { onClick: addOne },
+            " +1"
+        ),
+        React.createElement(
+            "button",
+            { onClick: minusOne },
+            " -1"
+        ),
+        React.createElement(
+            "button",
+            { onClick: reset },
+            "Reset"
+        )
+    );
+
+    ReactDOM.render(templateTwo, appRoot);
+};
+
+renderCounterApp();
