@@ -2,8 +2,6 @@
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -36,7 +34,7 @@ var IndecisionApp = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
         _this.state = {
-            options: ["Thing 1", "Thing 2", "Thing 3"]
+            options: []
         };
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
@@ -56,9 +54,16 @@ var IndecisionApp = function (_React$Component) {
     }, {
         key: "handleAddOption",
         value: function handleAddOption(option) {
+            if (!option) {
+                return "Enter valid value to add item";
+            } else if (this.state.options.indexOf(option) > -1) {
+                return "This option exists";
+            }
+
             this.setState(function (prevState) {
                 return {
-                    options: [].concat(_toConsumableArray(prevState.options), [option])
+                    // options: [...prevState.options, option] 
+                    options: prevState.options.concat(option)
                 };
             });
         }
@@ -220,6 +225,9 @@ var AddOption = function (_React$Component6) {
         var _this6 = _possibleConstructorReturn(this, (AddOption.__proto__ || Object.getPrototypeOf(AddOption)).call(this, props));
 
         _this6.handleAdd = _this6.handleAdd.bind(_this6);
+        _this6.state = {
+            error: undefined
+        };
         return _this6;
     }
 
@@ -228,9 +236,13 @@ var AddOption = function (_React$Component6) {
         value: function handleAdd(e) {
             e.preventDefault();
             var option = e.target.option.value.trim();
-            if (option) {
-                this.props.handleAddOption(option);
-            }
+
+            var error = this.props.handleAddOption(option);
+            this.setState(function () {
+                return {
+                    error: error
+                };
+            });
         }
     }, {
         key: "render",
@@ -238,6 +250,11 @@ var AddOption = function (_React$Component6) {
             return React.createElement(
                 "div",
                 null,
+                this.state.error ? React.createElement(
+                    "p",
+                    { style: { color: "red" } },
+                    this.state.error
+                ) : null,
                 React.createElement(
                     "form",
                     { onSubmit: this.handleAdd },
