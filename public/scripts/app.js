@@ -34,20 +34,74 @@ var IndecisionApp = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (IndecisionApp.__proto__ || Object.getPrototypeOf(IndecisionApp)).call(this, props));
 
         _this.state = {
-            options: props.options
+            options: []
         };
         _this.handleDeleteOptions = _this.handleDeleteOptions.bind(_this);
         _this.handleAddOption = _this.handleAddOption.bind(_this);
         _this.handlePick = _this.handlePick.bind(_this);
+        _this.handleDeleteSpecificOption = _this.handleDeleteSpecificOption.bind(_this);
         return _this;
     }
 
+    // handleDeleteOptions(){
+    //     this.setState(() => {
+    //         return {
+    //             options: []
+    //         }
+    //     })
+    // }
+
+
     _createClass(IndecisionApp, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            // console.log("fetching data")
+            try {
+                var json = localStorage.getItem("options");
+                var options = JSON.parse(json);
+                if (options) {
+                    this.setState(function () {
+                        return {
+                            options: options
+                        };
+                    });
+                }
+            } catch (e) {
+                // Do nothing at all
+            }
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (prevState.options.length !== this.state.options.length) {
+                console.log("saving data");
+                var json = JSON.stringify(this.state.options);
+                localStorage.setItem("options", json);
+            }
+        }
+    }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+            console.log("Unmount");
+        }
+    }, {
         key: "handleDeleteOptions",
         value: function handleDeleteOptions() {
             this.setState(function () {
                 return {
                     options: []
+                };
+            });
+        }
+    }, {
+        key: "handleDeleteSpecificOption",
+        value: function handleDeleteSpecificOption(optionClicked) {
+            // console.log(option)
+            this.setState(function (prevState) {
+                return {
+                    options: prevState.options.filter(function (option) {
+                        return option !== optionClicked;
+                    })
                 };
             });
         }
@@ -60,6 +114,12 @@ var IndecisionApp = function (_React$Component) {
                 return "This option exists";
             }
 
+            // this.setState((prevState) => {
+            //     return {
+            //         // options: [...prevState.options, option] 
+            //         options: prevState.options.concat(option)
+            //     }
+            // })
             this.setState(function (prevState) {
                 return {
                     // options: [...prevState.options, option] 
@@ -88,7 +148,8 @@ var IndecisionApp = function (_React$Component) {
                 }),
                 React.createElement(Options, {
                     options: this.state.options,
-                    handleDeleteOptions: this.handleDeleteOptions
+                    handleDeleteOptions: this.handleDeleteOptions,
+                    handleDeleteSpecificOption: this.handleDeleteSpecificOption
                 }),
                 React.createElement(AddOption, {
                     handleAddOption: this.handleAddOption
@@ -100,21 +161,22 @@ var IndecisionApp = function (_React$Component) {
     return IndecisionApp;
 }(React.Component);
 
-IndecisionApp.defaultProps = {
-    options: []
+// IndecisionApp.defaultProps = {
+//     options: []
+// }
 
-    // class Header extends React.Component {
-    //     render(){
-    //         return (
-    //             <div>
-    //                 <h1>{this.props.title}</h1>
-    //                 <h2>{this.props.subtitle}</h2>
-    //             </div>
-    //         );
-    //     }
-    // }
+// class Header extends React.Component {
+//     render(){
+//         return (
+//             <div>
+//                 <h1>{this.props.title}</h1>
+//                 <h2>{this.props.subtitle}</h2>
+//             </div>
+//         );
+//     }
+// }
 
-};var Header = function Header(props) {
+var Header = function Header(props) {
     return React.createElement(
         "div",
         null,
@@ -185,8 +247,17 @@ var Options = function Options(props) {
             { onClick: props.handleDeleteOptions },
             "Remove All Button"
         ),
+        props.options.length === 0 && React.createElement(
+            "p",
+            null,
+            "Add some options"
+        ),
         props.options.map(function (option) {
-            return React.createElement(Option, { key: option, option: option });
+            return React.createElement(Option, {
+                key: option,
+                handleDeleteSpecificOption: props.handleDeleteSpecificOption,
+                option: option
+            });
         })
     );
 };
@@ -205,7 +276,14 @@ var Option = function Option(props) {
     return React.createElement(
         "div",
         null,
-        props.option
+        props.option,
+        React.createElement(
+            "button",
+            { onClick: function onClick(e) {
+                    return props.handleDeleteSpecificOption(props.option);
+                } },
+            "Remove"
+        )
     );
 };
 
@@ -231,11 +309,20 @@ var AddOption = function (_React$Component2) {
             var option = e.target.option.value.trim();
 
             var error = this.props.handleAddOption(option);
+            // this.setState(() => {
+            //     return {
+            //         error
+            //     }
+            // })
             this.setState(function () {
                 return {
                     error: error
                 };
             });
+
+            if (!error) {
+                e.target.option.value = "";
+            }
         }
     }, {
         key: "render",
