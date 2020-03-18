@@ -5,16 +5,19 @@ import Header from './Header'
 import Action from './Action'
 
 export default class IndecisionApp extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            options: []
-        }
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
-        this.handleAddOption = this.handleAddOption.bind(this)
-        this.handlePick = this.handlePick.bind(this)
-        this.handleDeleteSpecificOption = this.handleDeleteSpecificOption.bind(this)
+    state= {
+        options: []
     }
+    // constructor(props){
+    //     super(props)
+    //     this.state = {
+    //         options: []
+    //     }
+    //     this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
+    //     this.handleAddOption = this.handleAddOption.bind(this)
+    //     this.handlePick = this.handlePick.bind(this)
+    //     this.handleDeleteSpecificOption = this.handleDeleteSpecificOption.bind(this)
+    // }
 
     // handleDeleteOptions(){
     //     this.setState(() => {
@@ -51,20 +54,20 @@ export default class IndecisionApp extends React.Component {
         console.log("Unmount")
     }
 
-    handleDeleteOptions(){
+    handleDeleteOptions = () => {
         this.setState(() => ({
             options: []
         }))
     }
 
-    handleDeleteSpecificOption(optionClicked){
+    handleDeleteSpecificOption=(optionClicked)=>{
         // console.log(option)
         this.setState((prevState) => ({
             options: prevState.options.filter(option => option !== optionClicked)
         }))
     }
 
-    handleAddOption(option){
+    handleAddOption=(option)=>{
         if(!option){
             return "Enter valid value to add item"
         }
@@ -86,7 +89,7 @@ export default class IndecisionApp extends React.Component {
         ))
     }
 
-    handlePick(){
+    handlePick=()=>{
         const random = Math.floor(Math.random() * this.state.options.length);
         const option = this.state.options[random]
         alert(option)
