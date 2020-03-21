@@ -40,7 +40,7 @@ export default class AddOption extends React.Component {
             }
             <form onSubmit={this.handleAdd}>
                 <input type="text" name="option"/>
-                <input type="submit"/>
+                <button className="button">Add Option</button>
             </form>
         </div>
         )
